@@ -1,17 +1,17 @@
-## Variables and Mutability
+## Biến và sự thay đổi của biến
 
-As mentioned in Chapter 2, by default variables are *immutable*. This is one of
-many nudges in Rust that encourages you to write your code in a way that takes
-advantage of the safety and easy concurrency that Rust offers. However, you
-still have the option to make your variables mutable. Let’s explore how and why
-Rust encourages you to favor immutability, and why you might want to opt out.
+Như đã được nhắc đến ở chương 2, mặc định tất cả các biến khi được khai báo
+ở Rust điều là không thay đổi được hay còn gọi là *immutable*. Đây là một trong
+nhiều điều được Rust khuyến khích dùng để bảo đảm tình an toàn và đồng thời. Tuy nhiên, bạn
+vẫn cảm thấy thiếu điều gì đó và muốn làm cho biến thay đổi được giá trị. Hãy cùng nhau khám
+để hiều làm thế nào và tại sao Rust lại khuyến khích dùng immutability, và tại sao bạn không muốn tham gia.
 
-When a variable is immutable, that means mean once a value is bound to a name,
-you can’t change that value. To illustrate, let’s generate a new project called
-*variables* in your *projects* directory by using `cargo new --bin variables`.
+Khi mà biến không thể thay đổi giá trị, nghĩa là mỗi một giá trị sẽ được gán cho một biến,
+bạn không thể thay đổi giá trị của biến đó. Để minh hoạ điều đó, hãy tạo một project có tên là
+*variables* trong thư mục *projects* bằng cách dùng lệnh `cargo new --bin variables`.
 
-Then, in your new *variables* directory, open *src/main.rs* and replace its
-code with the following:
+Kế tiếp, trong thư mục *variables*, mở file *src/main.rs* và thay thế dòng code bằng
+dòng dưới đây:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -24,8 +24,7 @@ fn main() {
 }
 ```
 
-Save and run the program using `cargo run`. You should receive an error
-message, as shown in this output:
+Lưu lại và chạy lệnh `cargo run`. Bạn sẽ nhận được một thông báo lỗi ở màn hình:
 
 ```text
 $ cargo run
@@ -40,13 +39,14 @@ error[E0384]: re-assignment of immutable variable `x`
   |     ^^^^^ re-assignment of immutable variable
 ```
 
-This example shows how the compiler helps you find errors in your programs.
-Even though compiler errors can be frustrating, they only mean your program
-isn’t safely doing what you want it to do yet; they do *not* mean that you’re
-not a good programmer! Experienced Rustaceans still get compiler errors. The
-error indicates that the cause of the error is `re-assignment of immutable
-variable`, because we tried to assign a second value to the immutable `x`
-variable.
+Ví dụ trên đó cho chúng ta thấy compiler đã giúp chúng ta tìm ra lỗi.
+Mặc dù lỗi biên dịch sẽ gây cho bạn cảm giác bực bội, những lỗi đó
+chỉ thông báo bạn biết rằng chương trình của bạn không an toàn
+với những gì bạn muốn thực hiện ; xuất hiện nhiều lỗi như vậy không có nghĩa
+bạn là một progrmmer tệ! Đối với Rustaceans có kinh nghiệm họ vẫn nhận được
+nhiều lỗi khi biên dịch chương trình. Những dòng lỗi chỉ cho chúng ta biết
+nguyên nhân là `re-assignment of immutable variable` (*cố gắng gán lại giá trị của biến không thay đổi*), 
+bởi vì chúng ta đang cố gắng gán một giá trị thứ cho biến `x`.
 
 It’s important that we get compile-time errors when we attempt to change a
 value that we previously designated as immutable because this very situation

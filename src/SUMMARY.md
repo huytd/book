@@ -9,7 +9,7 @@
 - [Guessing Game Tutorial]()
 
 - [Common Programming Concepts]()
-    - [Variables and Mutability]()
+    - [Variables and Mutability](ch03-01-variables-and-mutability.md)
     - [Data Types]()
     - [How Functions Work]()
     - [Comments]()
