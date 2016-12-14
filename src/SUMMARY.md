@@ -36,7 +36,7 @@
     - [Importing Names with `use`]()
 
 - [Fundamental Collections]()
-    - [Vectors]()
+    - [Vectors](ch08-01-vectors.md)
     - [Strings]()
     - [Hash Maps]()
 
