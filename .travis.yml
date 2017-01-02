@@ -10,10 +10,9 @@ script:
 - PATH=$PATH:/home/travis/.cargo/bin mdbook test
 - PATH=$PATH:/home/travis/.cargo/bin mdbook build
 - cargo run --bin lfp src
-deploy:
-  provider: releases
-  api_key:
-    secure: mFkN1r8miy+l+mApdqHs1uD1rsMrutIZNQOhNG5sPx4+WKUoAGIuxURQz0p3xoHpmJoeW4+6I9gnoDuZwxJcR4NPfZGjaaPmPUBBWNIER1zo6rwwAPMlaXS0A13/U37/BuYYA6cAwhYZLXWA3c4Yv6zPTUHZQya/GWQJbdqfU7Vl+Stlm2eGE1R0SnUqj8Zu0O4rZKoowips3SBXhjGa2sqSbcTN663Km6utDWFGm8AIqXt/T6pKmP4tnbTSyh8zV282ReH/OpI4bFmCaHtinnuKN/9YVMKYr7FX7Mj4E7OsAeRulVd0tcczxB01ZuJImtGlOhrnfP/qSGuxsYEHhjYGVvUHBJ9jcSS9Qm1t8BuCy1R6gGpOj5FfLjeEh9M8h0YQU8tUWzNaCez+w8hFaef3Y20Dn+lsDAju3Uc6QQCsdR251di4dCUqOpKPzfX1+IOe1eTec2ufPPTBDfVbmc3fURtat0YOtkzhgaF5PMwPhOJSv2JMJJ68iIAxXKhpzNPPJ9vXTmcxkzjSofD4UM8OzEgLup//lfipfD+iiqE/9Mg/ccrkrM5WcBiWiqYTGfA+T/dje4e7geTcKk647Br9oo79Q2adW+lVM3VeCah1p+wBdgj463YTf82yF+86Lye3je/E4ZUgAnC9/p/kd3mv4JFKecZl/o2zPDiLL6I=
-  file: "/book"
-  on:
-    repo: rust-vietnam/book
+after_success:
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" &&  bash
+  deploy-gh-pages.sh
+env:
+  global:
+  - secure: wwGBDWJqXSH4qFGHiNh3+kYWaZSm81aJEMmLm1MJwe27ZZA+6vqsr3kaDm9AYlneeddfTGt6cEtVolCNGY1SGrCGdhAOL4unc+/4Ct1jLB3yZaV5upbGnr/nJi8AvAUM/r06igSJBe3oRiA3B+imOC4XxHpZpL/rWapAe8qiLpElrH2AhcrofeSuX/R+yg1riUbkqYCP/YHzqqrRvAIvLyVI1vopKgwoRjdjj0Xxo72OWRfifXTFX3RKg3o3fHTbZ2SX0DXotUe6W1a2q4LDct8Coovv/ir7PpHMsX10Th/Rj3P9f050S/EgqQanWDmk3xwEEv3Zx63+9blPC6xskmdsxlpWA9+9SYXZSjTy0jhMOCUclJTaTt6vS7gsu6OFkHn2JHN2LJr8+DrRxCjWt899bDwpbaGEw7VhgdAP8LDh3Pqkp1EmL+Cn4Gkq3i0pUVaJEij/wWnqwzJqwVY8lbNZX2ZFqpYyblArTZAX2rj8LVY6CO5mE7ExqomiFXFvS3/HlayyBcbEcH4t9px5JsGG6JdPM9An0atzVqYjhgd9mtut1jv56iDE8HR5uWR5YH35ciLDQbbq36DWbbbFh6z6KWQhUXf7qMf1E1cXWynVFBwEbolgY/qwVkyXRNr8EkR5a5ssfv7US7fowSI4/PSxGQ2gnymO7HECwAYGNJ0=
