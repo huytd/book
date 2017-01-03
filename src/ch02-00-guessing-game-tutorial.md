@@ -1,33 +1,21 @@
 # Guessing Game
 
-Let’s jump into Rust by working through a hands-on project together! This
-chapter introduces you to a few common Rust concepts by showing you how to use
-them in a real program. You’ll learn about `let`, `match`, methods, associated
-functions, using external crates, and more! The following chapters will explore
-these ideas in more detail. In this chapter, you’ll practice the fundamentals.
+Chúng ta sẽ bắt đầu với Rust bằng cách cùng nhau build một project nhỏ nhé! Chương này sẽ giới thiệu cho bạn một vài khái niệm Rust cơ bản bằng cách chỉ cho bạn cách sử dụng nó trong một chương trình thực tế. Bạn sẽ học về `let`, `match`, methods, associated functions, sử dụng crate,...
 
-We’ll implement a classic beginner programming problem: a guessing game. Here’s
-how it works: the program will generate a random integer between 1 and 100. It
-will then prompt the player to enter a guess. After entering a guess, it will
-indicate whether the guess is too low or too high. If the guess is correct, the
-game will print congratulations and exit.
+Chúng ta sẽ implement một chương trình nhập môn kinh điển: game đoán số :)) Cách hoạt động của nó như thế này: Đầu tiên, chương trình sẽ tạo ra một số ngẫu nhiên trong phạm vi từ 1 tới 100, sau đó nó sẽ thông báo để người chơi đoán số và nhập vào bàn phím, máy tính sẽ kiểm tra xem con số được nhập vào có lớn hơn hay bé hơn con số được sinh ra hay không, nếu đoán đúng, chương trình sẽ in ra dòng thông báo chúc mừng và kết thúc.
 
-## Setting Up a New Project
+## Set up dự án mới 
 
-To set up a new project, go to the *projects* directory that you created in
-Chapter 1, and make a new project using Cargo, like so:
+Để set up một dự án mới, vào thư mục *projects* mà bạn đã tạo ở Chương 1, và tạo project mới với Cargo, như sau:
 
 ```text
 $ cargo new guessing_game --bin
 $ cd guessing_game
 ```
 
-The first command, `cargo new`, takes the name of the project (`guessing_game`)
-as the first argument. The `--bin` flag tells Cargo to make a binary project,
-similar to the one in Chapter 1. The second command changes to the new
-project’s directory.
+Lệnh đầu tiên, `cargo new`, có tham số đầu tiên là tên của project (`guessing_game`). Flag `--bin` báo cho Cargo rằng bạn muốn tạo một binary project, giống như ở Chương 1. Lệnh thứ 2 là để truy cập vào thư mục của project vừa tạo.
 
-Look at the generated *Cargo.toml* file:
+Xem nội dung của file *Cargo.toml* vừa tạo ra nào:
 
 <span class="filename">Filename: Cargo.toml</span>
 
@@ -40,11 +28,9 @@ authors = ["Your Name <you@example.com>"]
 [dependencies]
 ```
 
-If the author information that Cargo obtained from your environment is not
-correct, fix that in the file and save it again.
+Nếu thông tin tác giả mà Cargo tự động lấy ra từ cấu hình environment của bạn không đúng, hãy sửa nó và lưu file này lại.
 
-As you saw in Chapter 1, `cargo new` generates a “Hello, world!” program for
-you. Check out the *src/main.rs* file:
+Như bạn đã biết ở Chương 1, lệnh `cargo new` tạo ra chương trình "Hello, world!" dùm cho bạn. Xem file *src/main.rs*:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -54,8 +40,7 @@ fn main() {
 }
 ```
 
-Now let’s compile this “Hello, world!” program and run it in the same step
-using the `cargo run` command:
+Bây giờ bạn có thể compile và chạy chương trình này bằng lệnh `cargo run`:
 
 ```text
 $ cargo run
@@ -64,17 +49,11 @@ $ cargo run
 Hello, world!
 ```
 
-The `run` command comes in handy when you need to rapidly iterate on a project,
-and this game is such a project: we want to quickly test each iteration
-before moving on to the next one.
+Nào, hãy mở lại file *src/main.rs*, bạn sẽ bắt đầu viết code trong file này.
 
-Reopen the *src/main.rs* file. You’ll be writing all the code in this file.
+## Xử lý thao tác đoán số 
 
-## Processing a Guess
-
-The first part of the program will ask for user input, process that input, and
-check that the input is in the expected form. To start, we’ll allow the player
-to input a guess. Enter the code in Listing 2-1 into *src/main.rs*.
+Việc đầu tiên của chương trình này sẽ là yêu cầu người dùng nhập text vào, xử lý đoạn text đó và kiểm tra xem đoạn text nhập vào có hợp lệ hay không. Để bắt đầu, gõ đoạn code trong Listing 2-1 vào *src/main.rs*.
 
 <figure>
 <span class="filename">Filename: src/main.rs</span>
@@ -98,29 +77,22 @@ fn main() {
 
 <figcaption>
 
-Listing 2-1: Code to get a guess from the user and print it out
+Listing 2-1: Code đọc số mà user đoán rồi in nó ra
 
 </figcaption>
 </figure>
 
-This code contains a lot of information, so let’s go over it bit by bit. To
-obtain user input and then print the result as output, we need to import the
-`io` (input/output) library from the standard library (which is known as `std`):
+Đoạn code này có rất nhiều điểm mà bạn cần biết, vì thế hãy xem xét nó từng dòng một nào. Để lấy input từ phía user và in nó ra màn hình, cúng ta cần phải import thư viện `io` (input/output) từ bộ thư viện chuẩn (standard library - `std`):
 
 ```rust,ignore
 use std::io;
 ```
 
-By default, Rust imports only a few types into every program in [the
-*prelude*][prelude]<!-- ignore -->. If a type you want to use isn’t in the
-prelude, you have to import that type into your program explicitly with a `use`
-statement. Using the `std::io` library provides you with a number of useful
-`io`-related features, including the functionality to accept user input.
+Mặc định, trong mỗi chương trình, Rust chỉ import một vài thứ cần thiết được định nghĩa trong [*prelude*][prelude]<!-- ignore -->. Nếu thứ mà bạn cần dùng không có trong prelude, bạn cần phải import nó vào bằng lệnh `use`. Sử dụng thư viện  `std::io` sẽ cung cấp cho bạn rất nhiều chức năng liên quan tới `io`, ví dụ như đọc input từ user.
 
 [prelude]: https://doc.rust-lang.org/std/prelude/
 
-As you saw in Chapter 1, the `main` function is the entry point into the
-program:
+Như đã nói ở Chương 1, hàm `main` là điểm bắt đầu của một chương trình Rust (vì nó được chạy đầu tiên):
 
 ```rust,ignore
 fn main() {
