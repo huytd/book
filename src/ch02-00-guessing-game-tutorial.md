@@ -98,11 +98,9 @@ Như đã nói ở Chương 1, hàm `main` là điểm bắt đầu của một 
 fn main() {
 ```
 
-The `fn` syntax declares a new function, the `()` indicate there are no
-arguments, and `{` starts the body of the function.
+Từ khóa `fn` định nghĩa một hàm mới, dấu ngoặc `()` cho chúng ta biết rằng không có tham số nào được truyền vào hàm này cả, và dấu `{` cho biết chúng ta bắt đầu khai báo phần thân của hàm vừa tạo.
 
-As you also learned in Chapter 1, `println!` is a macro that prints a string to
-the screen:
+Macro `println!` có nhiệm vụ in một chuỗi ra màn hình:
 
 ```rust,ignore
 println!("Guess the number!");
@@ -110,50 +108,41 @@ println!("Guess the number!");
 println!("Please input your guess.");
 ```
 
-This code is just printing a prompt stating what the game is and requesting
-input from the user.
+Đoạn code trên chỉ đơn giản là in dòng thông báo cho biết game đang yêu cầu input từ phía user thôi, không có gì đáng nói cả.
 
-### Storing Values with Variables
+### Tạo biến và lưu giá trị 
 
-Next, we’ll create a place to store the user input, like this:
+Tiếp theo, chúng ta cần lưu giá trị nhập vào từ user, bằng cách tạo ra một biến mới:
 
 ```rust,ignore
 let mut guess = String::new();
 ```
 
-Now the program is getting interesting! There’s a lot going on in this little
-line. Notice that this is a `let` statement, which is used to create
-*variables*. Here’s another example:
+Bây giờ thì chương trình của chúng ta bắt đầu có thứ đáng để nói rồi đây! Rất nhiều điều cần lưu ý trong dòng code trên. Có thể thấy đây là một lệnh `let`, được dùng để tạo ra một *biến* mới. Đây là một ví dụ khác:
 
 ```rust,ignore
 let foo = bar;
 ```
 
-This line will create a new variable named `foo` and bind it to the value
-`bar`. In Rust, variables are immutable by default. The following example shows
-how to use `mut` before the variable name to make a variable mutable:
+Dòng này sẽ tạo ra một biến tên `foo` và gán nó với giá trị `bar`. Trong Rust, một biến là không đổi (immutable), tức là bạn không thể thay đổi giá trị của một biến sau khi nó được tạo ra. Vì thế chúng ta cần dùng tới từ khóa `mut` để làm cho biến trở thành mutable (thay đổi được).
+
+> **Ghi chú từ team dịch sách:** Nếu bạn cảm thấy không quen với chữ **immutable/mutable** thì hãy nhớ đến tên tiếng Anh của bộ phim/truyện **Ninja Rùa** -- **Teenage Mutant Ninja Turtles**, có thể dịch sát nghĩa là **"Những con rùa tuổi teen bị đột biến"** 😂 -- Từ đó có thể thấy từ **mutant** (something which has mutated) ở đây có nghĩa là đã bị biến đổi, suy ra **mutate** là biến đổi, suy ra **mutable** là biến đổi được và suy ra **immutable** là không biến đổi được. Trong trường hợp này thì mấy con rùa bị biến đổi gen nên gọi là đột biến 🐢
 
 ```rust
 let foo = 5; // immutable
 let mut bar = 5; // mutable
 ```
 
-> Note: The `//` syntax starts a comment that continues until the end of the
-> line. Rust ignores everything in comments.
+> Ghi chú: Dấu `//` là để bắt đầu một comment mới trên dòng đó. Rust sẽ bỏ qua tất cả mọi nội dung bên trong comment (không compile).
 
-Now you know that `let mut guess` will introduce a mutable variable named
-`guess`. On the other side of the equal sign (`=`) is the value that `guess` is
-bound to, which is the result of calling `String::new`, a function that returns
-a new instance of a `String`. [`String`][string]<!-- ignore --> is a string
-type provided by the standard library that is a growable, UTF-8 encoded bit of
-text.
+Vậy nên `let mut guess` sẽ tạo ra một biến `guess` có thể thay đổi được nội dung. 
+
+Đằng sau dấu bằng (`=`) của câu lệnh trên là giá trị mà biến `guess` sẽ được gán vào, ở đây sẽ là kết quả của lệnh gọi `String::new`, là một hàm trả về một instance mới của `String`. [`String`][string]<!-- ignore --> là kiểu dữ liệu được cung cấp bởi bộ thư viện chuẩn (standard library) có hỗ trợ UTF-8.
 
 [string]: ../std/string/struct.String.html
 
-The `::` syntax in the `::new` line indicates that `new` is an *associated
-function* of the `String` type. An associated function is implemented on a type,
-in this case `String`, rather than on a particular instance of a `String`. Some
-languages call this a *static method*.
+Dấu `::` ở trong lệnh `::new` cho biết rằng `new` là một *associated
+function* của kiểu dữ liệu `String`. Associated function là hàm được implement bên trong một kiểu dữ liệu (type) thay vì implement trên instance của kiểu đó. Một vài ngôn ngữ còn gọi đây là *static method*.
 
 This `new` function creates a new, empty `String`. You’ll find a `new` function
 on many types, because it’s a common name for a function that makes a new value
